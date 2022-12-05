@@ -1,0 +1,12 @@
+---
+title: "Katie's Project Homepage"
+author: "Katie Webster"
+date: "2022-12-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+welcome to Katie's class page! 
