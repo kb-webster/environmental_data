@@ -1,0 +1,73 @@
+---
+title: "R Markdown Documents - Part 1"
+subtitle: Analysis of Environmental Data
+author: "Katie Webster"
+output:
+   html_document:
+    toc: true
+    toc_float: true
+---
+
+# Introduction 
+
+Hello, My name is **Katie** and  I am  PhD student in the *Plant Biology* program 
+
+# Concepts List
+
+1. Basic R
+2. Hypothesis-testing
+3. When to use the which statistical test
+4. Choosing the best graphical representation of my data
+
+# Course List
+
+* New England Flora
+* Tropical Plant Systematics
+* Bioinformatics
+* Glass Blowing
+* Plant Stress Physiology
+*Mycology
+
+
+---
+  
+
+```{r}
+v1 <- -2:2
+print(v1)
+
+v2<- v1*3
+print(v2)
+
+
+
+
+vec_4 <-1:12
+mat_1 <- matrix(vec_4, nrow=3, ncol=4, byrow=TRUE)
+print(mat_1)
+vec_4 <-1:12
+mat_2 <- matrix(vec_4, nrow=3, ncol=4, byrow=FALSE)
+print(mat_2)
+
+
+char <-"five point two"
+num <-5.2
+vec <-(0:5)
+my_list_1<-list(num, char, vec)
+names(my_list_1)= c("two","one", "three'")
+
+print(my_list_1)
+
+my_vec = rep(1:3, 5)
+my_vec
+#>  [1] 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3
+print(my_vec)
+
+my_bool_vec<-c(my_vec==3)
+
+print(my_bool_vec)
+
+my_vec[my_bool_vec]
+
+```
+

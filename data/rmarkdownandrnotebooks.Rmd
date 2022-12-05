@@ -1,0 +1,34 @@
+---
+title: "R Markdown Documents - Part 1"
+subtitle: “Analysis of Environmental Data”
+author: "Katie Webster"
+output:
+   html_document:
+    toc: true
+    toc_float: true
+---
+
+# Introduction 
+
+Hello, My name is **Katie** and  I am  PhD student in the *Plant Biology* program 
+
+## Concepts List
+
+1. Basic R
+2. Hypothesis-testing
+3. When to use the which statistical test
+4. Choosing the best graphical representation of my data
+
+### Course List
+
+* New England Flora
+* Tropical Plant Systematics
+* Bioinformatics
+* Glass Blowing
+* Plant Stress Physiology
+*Mycology
+
+
+---
+  
+
