@@ -1,0 +1,284 @@
+---
+title: "final_R_reference"
+author: "Katie Webster"
+date: "2022-12-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# R Reference Guide {.tabset .tabset-pills}
+
+
+## Loading Data and Packages
+
+
+To load packages you first need to install them
+
+install.packages("palmerpenguins")
+install.packages("here")
+
+
+```{r}
+#Then we can tell R we want to use these packages with either require() or library()
+
+library(palmerpenguins)
+library(here)
+
+#renaming plamerpenguins
+
+penguins <- data.frame(penguins)
+
+summary(penguins)
+
+````
+If you have your own data that you would like to load into R, this is how you would do it
+```{r}
+##first we use here() which always goes to my base working directory (WD) of my current  R porject
+here()
+#now we use read.csv to read our .csv file with here to help direct the path. And name the data.frame we just uploaded using = or <-
+
+ginkgo <-read.csv(here("data", "ginkgo_data_2021.csv"))
+
+ginkgo
+```
+## Data Structure 
+
+Create a vector of numbers:
+```{r} 
+num_vec  = c(1, 4, 8, 9, 13)
+
+## Create a vector of characters:
+char_vec = c("a", "fish", "data is cool")
+
+```
+
+I can show the contents of a vector by typing the name of the vector, or using the print() function.
+
+```{r}
+## Typing the name of the vector into the console prints the contents
+num_vec
+
+## The print() function accomplishes the same task:
+print(char_vec)
+
+```
+If I want to know how many characters are in a vector I use length()
+
+```{r}
+length(num_vec)
+```
+A matrix can be made using a vector
+
+```{r}
+matrix_num_vec<-matrix(data=num_vec,nrow=3,ncol=2)
+# Specify number of rows, nrow, and number of columns, ncol
+matrix_num_vec
+
+#turning the mnatrix into a dataframe.
+df_matrix<-data.frame(matrix_num_vec)
+
+df_matrix
+```
+
+If I want to know how many rows in a dataset I use nrow(datasetname) and the funtion will return the number of rows. 
+```{r}
+nrow(ginkgo)
+```
+I can do the same for columns for ncol(datasetname)
+```{r}
+ncol(ginkgo)
+```
+To find out both the number of rows and columns I can use the function dim(datasetname)
+```{r}
+dim(ginkgo)
+```
+
+
+## Sub-setting 
+
+
+creating a new subset of a data.frame
+In this example we will use the the ginkgo data set and select only one column to be the new data.frame using $
+
+```{r}
+#data.frame$name of column you would like to subset
+
+Gpetiole_length<-ginkgo$petiole_length
+
+Gpetiole_length
+
+```
+Sometimes you may want to subset even further by selecting the row and or column we do this with [ ]'s
+
+```{r}
+# select first row of the ginkgo data by position
+
+ginkgo[1,]
+
+# select the element in row 2, column 3
+
+ginkgo[[3,2]]
+
+#select the 3rd column of the ginkgo data
+
+ginkgo[3]
+
+```
+In this example we also use the subset() function to retrieve all the data for Adelie penguins (in the species column) from the peuguins dataset
+
+```{r}
+subset(penguins,species=="Adelie")
+```
+
+
+
+## Numerical Data Exploration
+
+Sometimes we may want a quick summary of our data.frame 
+for this we will use summary()
+```{r}
+summary(penguins)
+
+# we get the summary of categorical and numerical values for each column 
+```
+Or we might want to take the mean on a specific column in our data.frame
+
+```{r}
+#here we calculate the mean of bill length in mm for all penguins in the penguin data set 
+# We have to add na.rm = TRUE to exclude the missing data points from our computations 
+# If we don't do this it will return NA to us
+mean(penguins$body_mass_g,na.rm = TRUE)
+```
+
+We can easily calculate the standard deviation of a data set by using sd()
+```{r}
+#again we have to use na.rm = TRUE here to return results
+sd(penguins$body_mass_g,na.rm = TRUE)
+
+```
+
+
+## Graphical Data Exploration 
+
+LET'S GRAPH :) 
+
+Scatter plot: Using the ginkgo data, create a scatter plot of max leaf depth (x) and max leaf width (y).
+
+```{r}
+# plot() is the generic function in r 
+# plot(y-axis~x-axis , data=)
+#col = color of the plot symbol
+#pch = plotting symbol 
+#cex = the number determines the size of text to symbols should be scaled 
+#main = title 
+#xlab = the name of the x-axis 
+#ylab = the name of the y-axis 
+#xlim = x-axis limits 
+#ylim = y-axis limits 
+
+plotleafxleaf<-plot(max_width~max_depth,data=ginkgo, main="Max leaf depth vs Max leaf width of Ginkgos",
+   xlab="Max Leaf Depth (mm)", ylab="Max Leaf Width (mm)", pch=18, col="#339999", cex= 1.5, xlim=c(0,150), ylim=c(0,130) )
+
+ 
+```
+Making a Histogram 
+
+We use hist() to create a histogram of penguin flipper lengths
+
+breaks = controlling the number of bins, bars or cells in a histogram 
+
+```{r}
+
+hist(
+  penguins$flipper_length_mm,
+  main = "Penguin Flipper Length Frequency",
+  col = "lightblue",
+  border = "orange",
+  xlab = "Flipper Length (in mm)",
+  breaks= 8)
+
+```
+Making Boxplots 
+
+We start with a basic boxplot 
+
+```{r}
+boxplot(ginkgo$petiole_length)
+```
+Conditional box plot with a continous variable of leaf width conditioned on if seeds were present or not in the ginkgo data set 
+
+```{r}
+boxplot(max_width ~ seeds_present, data = ginkgo)
+```
+Making a multipanel figure of 4 histograms We use 
+par = creates multiple plots at once 
+mfrow = define the multi plot set up with (row, column) number
+```{r}
+par(mfrow = c(2, 2))
+hist(
+ginkgo$max_width,
+main = "Histogram of Ginkgo Leaf Max Width",
+xlab = "Leaf Max Width (mm)")
+hist(
+ginkgo$max_depth,
+main = "Histogram of Ginkgo Leaf Max Depth",
+xlab = "Leaf Max Depth (mm)")
+hist(
+ginkgo$notch_depth,
+main = "Histogram of Ginkgo Leaf Notch Depth",
+xlab = "Leaf Notch Depth (mm)"
+)
+hist(ginkgo$petiole_length,
+main = "Histogram of Ginkgo Petiole Length",
+xlab = "Petiole Length (mm)"
+)
+
+```
+
+## Distribution Functions
+
+dnorm(x, mean, standare deviation) is a function that gives you the value of the probability density function of a normal distribution according to your variables of choice 
+
+```{r}
+dnorm(2,1.5,1)
+```
+pnorm(x,mean, standard deviation) is a function that gives you the value of the cumulative density function of the normal distribution according to your variables of choice 
+x= vector of quantiles 
+```{r}
+pnorm(2,1.5,1)
+```
+
+qnorm(x, mean, standard deviation) is a function on that gives you the inverse result of the cumulative density function (pnorm)
+x= the significance level to be used 
+
+```{r}
+qnorm(.95,1.5,1)
+```
+dbinom(x_bin, size, probability) is like dnorm but returns the value of the probability density function for a binomial distribution
+
+```{r}
+dbinom(2,10,.6)
+```
+pbinom(x_bin, size, probability) is like pnorm but returns value of the cumulative density function for a binomial distribution
+```{r}
+pbinom(2,10,.6)
+```
+qbinom(x_bin, size, probability) is like qnorm but returns value of the cumulative density function for a binomial distribution
+```{r}
+dbinom(2,10,.6)
+```
+
+
+
+
+
+
+
+
+
+
